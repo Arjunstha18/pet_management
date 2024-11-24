@@ -1,5 +1,5 @@
 {
-    "name": "charchitpokharel/student-crud-twig",
+    "name": "aarjstha18/student-crud-twig",
     "description": "Student management system with Create, Read, Update, and Delete functionality, powered by Twig for templating",
     "autoload": {
         "psr-4": {
