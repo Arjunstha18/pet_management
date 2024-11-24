@@ -2,7 +2,7 @@
 namespace Muhammadwasim\StudentCrudTwig;
 use PDO;
 
-class Student
+class Pet
 {
     public $id;
     public $name;
@@ -21,8 +21,8 @@ class Student
 
     public static function all()
     {
-        // Fetch all students from the database
-        $stmt = self::$db->query("SELECT * FROM students");
+        // Fetch all pet from the database
+        $stmt = self::$db->query("SELECT * FROM pet");
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
@@ -34,7 +34,7 @@ class Student
             throw new \Exception("Database connection is not set.");
         }
 
-        $stmt = self::$db->prepare("SELECT * FROM students WHERE id = :id");
+        $stmt = self::$db->prepare("SELECT * FROM pet WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
@@ -45,11 +45,11 @@ class Student
         // Insert or update the student
         if ($this->id) {
             // Update existing record
-            $stmt = self::$db->prepare("UPDATE students SET name = :name, species = :species, age = :age, owner = :owner WHERE id = :id");
+            $stmt = self::$db->prepare("UPDATE pet SET name = :name, species = :species, age = :age, owner = :owner WHERE id = :id");
             $stmt->bindParam(':id', $this->id);
         } else {
             // Insert new record
-            $stmt = self::$db->prepare("INSERT INTO students (name, species, age, owner) VALUES (:name, :species, :age, :owner)");
+            $stmt = self::$db->prepare("INSERT INTO pet (name, species, age, owner) VALUES (:name, :species, :age, :owner)");
         }
 
         $stmt->bindParam(':name', $this->name);

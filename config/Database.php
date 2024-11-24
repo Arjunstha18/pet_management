@@ -8,9 +8,9 @@ class Database
 {
     // Database connection settings
     private $host = 'mi-linux.wlv.ac.uk';   // Hostname of your database server
-    private $db_name = 'db2357488';         // Your database name
-    private $username = '2357488';          // Database username
-    private $password = 'Cha911%';          // Database password
+    private $db_name = 'db2359011';         // Your database name
+    private $username = '2359011';           // Database username
+    private $password = '#Venom$&1515';          // Database password
     public $conn;
     public function getConnection()
     {

@@ -3,132 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student List</title>
+    <title>Pet List</title>
     <!-- Add Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+    <style>
+        /* Additional Styles */
+        table.table-hover tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        .form-control {
+            border-radius: 20px;
+        }
+        .btn-sm {
+            font-size: 0.875rem;
+            border-radius: 5px;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+        .pagination .page-item .page-link {
+            color: #007bff;
+        }
+        .alert-dismissible .close {
+            padding: 0.75rem 1.25rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="mb-4">Student List</h1>
-            {% if message %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <h1 class="mb-4 text-center">Pet List</h1>
+
+        <!-- Feedback Message -->
+        {% if message %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         {% endif %}
-         <!-- Row for Search input and Add New Student button -->
-        <div class="row mb-4">
-         <div class="col-md-6 text-right">
+
+        <!-- Row for Search input and Add New Pet button -->
+        <div class="row mb-4 justify-content-between">
+            <div class="col-md-6">
+                <input type="text" id="search" class="form-control" placeholder="Search for a pet..." />
             </div>
-         <div class="col-md-3 text-right">
-                <a href="/~2357488/student_management/public/create" class="btn btn-primary">Add New Student</a>
+            <div class="col-md-4 text-right">
+                <a href="/~2359011/pet_management/public/create" class="btn btn-primary btn-sm">Add New Pet</a>
             </div>
-            
-            <!-- Search input field -->
-            <div class="col-md-3">
-                <input type="text" id="search" class="form-control" placeholder="Search for students..." />
-            </div>
-            <!-- Add New Student button -->
-           
         </div>
 
-        <!-- Student Table -->
-        <table class="table table-bordered table-striped">
+        <!-- Pet Table -->
+        <table class="table table-bordered table-hover table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Species</th>
+                    <th>Owner</th>
                     <th>Age</th>
-                    <th>Course</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="studentTableBody">
-                {% for student in students %}
-                    <tr>
-                        <td>{{ student.name }}</td>
-                        <td>{{ student.email }}</td>
-                        <td>{{ student.age }}</td>
-                        <td>{{ student.course }}</td>
-                        <td>
-                            <!-- Edit and Delete Links -->
-                            <a href="/~2357488/student_management/public/edit/{{ student.id }}" class="btn btn-warning btn-sm" style="margin-right: 5px; padding: 5px 15px;">Edit</a>
-<a href="#" class="btn btn-danger btn-sm" style="padding: 5px 10px;" 
-   onclick="if (confirm('Are you sure you want to delete this student?')) { 
-       fetch('/~2357488/student_management/public/delete/{{ student.id }}', { 
-           method: 'POST' 
-       })
-       .then(response => {
-           if (response.ok) {
-               return response.text(); // Expecting a session message to be set
-           } else {
-               throw new Error('Failed to delete');
-           }
-       })
-       .then(() => {
-           location.reload(); // Reload after delete is successful
-       })
-       .catch(error => {
-           console.error('Error:', error);
-       }); 
-   } return false;">
-   Delete
-</a>
-                 </td>
-                    </tr>
+            <tbody id="petTableBody">
+                {% for pet in pet %}
+                <tr>
+                    <td>{{ pet.name }}</td>
+                    <td>{{ pet.species }}</td>
+                    <td>{{ pet.owner }}</td>
+                    <td>{{ pet.age }}</td>
+                    <td>
+                        <a href="/~2359011/pet_management/public/edit/{{ pet.id }}" class="btn btn-warning btn-sm mr-2">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm" 
+                           onclick="if (confirm('Are you sure you want to delete this pet?')) {
+                               fetch('/~2359011/pet_management/public/delete/{{ pet.id }}', { 
+                                   method: 'POST' 
+                               })
+                               .then(response => {
+                                   if (response.ok) {
+                                       location.reload();
+                                   } else {
+                                       alert('Failed to delete the pet.');
+                                   }
+                               });
+                           } return false;">Delete</a>
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-          <nav>
+
+        <!-- Pagination -->
+        <nav>
             <ul class="pagination justify-content-end" id="paginationControls">
-                <!-- Pagination buttons will be dynamically added here -->
+                <!-- Pagination items will be dynamically added here -->
             </ul>
         </nav>
     </div>
 
-    <!-- Add Bootstrap JS (Optional) -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Add Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-     <script>
-    // Ajax search functionality
-    $('#search').on('keyup', function() {
-        var query = $(this).val(); // Get the search query
 
-        $.ajax({
-            url: '/~2357488/student_management/public/search', // Route to handle the search request
-            type: 'GET',
-            data: { search: query },
-            success: function(response) {
-                // Update the table body with the filtered student data
-                $('#studentTableBody').html(response);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error: ', status, error);
-                // Optionally display an error message
-            }
-        });
-    });
-</script>
-  <script>
+    <script>
         $(document).ready(function () {
-            const rowsPerPage = 10; // Number of records per page
-            const $tableBody = $('#studentTableBody');
+            // Search functionality
+            $('#search').on('keyup', function () {
+                const query = $(this).val();
+                $.ajax({
+                    url: '/~2359011/pet_management/public/search',
+                    type: 'GET',
+                    data: { search: query },
+                    success: function (response) {
+                        $('#petTableBody').html(response);
+                    },
+                    error: function () {
+                        alert('Error fetching search results.');
+                    }
+                });
+            });
+
+            // Pagination logic
+            const rowsPerPage = 10;
+            const $rows = $('#petTableBody tr');
             const $paginationControls = $('#paginationControls');
-            const $rows = $tableBody.find('tr');
             const totalPages = Math.ceil($rows.length / rowsPerPage);
 
             function showPage(page) {
-                $rows.hide(); // Hide all rows
-                const start = (page - 1) * rowsPerPage;
-                const end = start + rowsPerPage;
-                $rows.slice(start, end).show(); // Show only the current page rows
+                $rows.hide();
+                $rows.slice((page - 1) * rowsPerPage, page * rowsPerPage).show();
 
-                // Update pagination controls
                 $paginationControls.html('');
                 for (let i = 1; i <= totalPages; i++) {
                     const isActive = page === i ? 'active' : '';
@@ -140,14 +146,11 @@
                 }
             }
 
-            // Initialize the first page
             showPage(1);
 
-            // Handle pagination clicks
             $paginationControls.on('click', '.page-link', function (e) {
                 e.preventDefault();
-                const page = parseInt($(this).data('page'));
-                showPage(page);
+                showPage(parseInt($(this).data('page')));
             });
         });
     </script>
