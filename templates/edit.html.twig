@@ -22,12 +22,12 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter pet's name" value="{{ pet.name }}" required>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter pet's name" value="{{ pet.name }}" required autocomplete="on">
                             <div class="invalid-feedback">Please enter the pet's name.</div>
                         </div>
                         <div class="col-md-6">
                             <label for="species" class="form-label">Species</label>
-                            <input type="text" class="form-control" name="species" id="species" placeholder="Enter pet's species" value="{{ pet.species }}" required>
+                            <input type="text" class="form-control" name="species" id="species" placeholder="Enter pet's species" value="{{ pet.species }}" required autocomplete="on">
                             <div class="invalid-feedback">Please enter the pet's species.</div>
                         </div>
                     </div>
@@ -36,12 +36,12 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="owner" class="form-label">Owner</label>
-                            <input type="text" class="form-control" name="owner" id="owner" placeholder="Enter pet's owner" value="{{ pet.owner }}" required>
+                            <input type="text" class="form-control" name="owner" id="owner" placeholder="Enter pet's owner" value="{{ pet.owner }}" required autocomplete="on">
                             <div class="invalid-feedback">Please enter the pet's owner.</div>
                         </div>
                         <div class="col-md-6">
                             <label for="age" class="form-label">Age</label>
-                            <input type="number" class="form-control" name="age" id="age" placeholder="Enter pet's age" value="{{ pet.age }}" required>
+                            <input type="number" class="form-control" name="age" id="age" placeholder="Enter pet's age" value="{{ pet.age }}" required autocomplete="on">
                             <div class="invalid-feedback">Please enter the pet's age.</div>
                         </div>
                     </div>
